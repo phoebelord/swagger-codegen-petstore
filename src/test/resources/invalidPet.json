@@ -1,0 +1,7 @@
+{
+  "animal": {
+    "petType": "bird",
+    "tweet": "string"
+  },
+  "status": "available"
+}

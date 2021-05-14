@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is a sample Petstore server.  You can find
+    out more about Swagger at
+    [http://swagger.io](http://swagger.io) or on
+    [irc.freenode.net, #swagger](http://swagger.io/irc/).
+  version: "1.0.0"
+  title: Swagger Petstore
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+paths:
+  /pet:
+    post:
+      tags:
+        - pet
+      summary: Add a new pet to the store
+      operationId: addPet
+      responses:
+        '405':
+          description: Invalid input
+      requestBody:
+        $ref: '#/components/requestBodies/Pet'
+    
+components:
+  schemas:
+    Pet:
+      type: object
+      required:
+        - animal
+        - status
+      properties:
+        animal:
+          $ref:  "#/components/schemas/Animal"
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - pending
+            - sold
+    Animal:
+      oneOf:
+        - $ref: "#/components/schemas/Dog"
+        - $ref: "#/components/schemas/Cat"
+      discriminator:
+        propertyName: petType
+        mapping:
+          dog: "Dog"
+          cat: "Cat"
+    Dog:
+      type: object
+      required:
+        - petType
+        - bark
+        - woof
+      properties:
+        petType:
+          type: string
+        bark:
+          type: string
+        woof:
+          type: string
+    Cat:
+      type: object
+      required:
+        - petType
+        - meow
+      properties:
+        meow:
+          type: string
+        petType:
+          type: string
+
+  requestBodies:
+    Pet:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+      description: Pet object that needs to be added to the store
+      required: true

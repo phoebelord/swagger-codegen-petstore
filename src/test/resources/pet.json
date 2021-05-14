@@ -1,0 +1,8 @@
+{
+  "animal": {
+    "petType": "dog",
+    "bark": "string",
+    "woof": "string"
+  },
+  "status": "available"
+}
